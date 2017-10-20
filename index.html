@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <title>Vue.JS Tutorial</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+
+  <body>
+    <div id="app">
+      <mu-appbar title="Title">
+        <mu-icon-button icon="close" slot="left"/>
+      </mu-appbar>
+
+      <template>
+      <div class="gridlist-demo-container">
+        <mu-grid-list class="gridlist-demo" :cols=4>
+          <mu-sub-header>图片展示</mu-sub-header>
+          <mu-grid-tile v-for="tile, index in list" :key="'tile' + index">
+            <p>{{tile.name}}<p>
+            <img :src="tile.img_url"/>
+            <span slot="title">{{tile.name}}</span>
+            <!-- <span slot="subTitle">by <b>{{tile.author}}</b></span> -->
+            <mu-icon-button icon="star_border" slot="action"/>
+          </mu-grid-tile>
+        </mu-grid-list>
+      </div>
+      </template>
+
+    </div>
+  </body>
+
+  <style>
+  .gridlist-demo-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .gridlist-demo{
+    width: 1000px;
+    height: 450px;
+    overflow-y: auto;
+  }
+  </style>
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://unpkg.com/muse-ui/dist/muse-ui.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/muse-ui/dist/muse-ui.css">
+  <link rel="stylesheet" href="https://unpkg.com/muse-ui/dist/theme-light.css">
+  <script>
+      var app = new Vue({
+        el: '#app',
+        data: {
+          list:[]
+        },
+        created: function () {
+          this.loadPage();
+        },
+        methods: {
+          loadPage: function(){
+                data_list = [];
+                axios.get('http://127.0.0.1:8000/api/boardgamedeals/?format=json')
+                  .then(function (response) {
+                    response.data.forEach(function(element) {
+                      data_list.push(element);
+                      console.log(element);
+                    });
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
+                this.list = data_list
+          }
+        }
+      })
+  </script>
+  <script>
+
+  </script>
+
