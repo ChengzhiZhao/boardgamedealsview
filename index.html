@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-    <title>Vue.JS Tutorial</title>
+    <title>Vue.JS</title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -15,26 +15,64 @@
 
   <body>
     <div id="app">
-      <mu-appbar title="Title">
+      <!-- <mu-appbar title="Title">
         <mu-icon-button icon="close" slot="left"/>
-      </mu-appbar>
+      </mu-appbar> -->
+        <template>
+          <div class="layout">
+            <div class="header">
+              <div class="logo">
+                Muse-UI
+              </div>
+              <div class="nav">
+                <mu-tabs :value="activeTab" @change="handleTabChange" class="tabs">
+                  <mu-tab value="tab1" title="Nav One"></mu-tab>
+                  <mu-tab value="tab2" title="Nav Two"></mu-tab>
+                  <mu-tab value="tab3" title="Nav Three"></mu-tab>
+                  <mu-tab value="tab4" title="Nav Four"></mu-tab>
+                </mu-tabs>
+              </div>
+            </div>
+          </div>
+      
 
-      <template>
-      <div class="gridlist-demo-container">
-        <mu-grid-list class="gridlist-demo" :cols=4>
-          <mu-sub-header>图片展示</mu-sub-header>
-          <mu-grid-tile v-for="tile, index in list" :key="'tile' + index">
-            <p>{{tile.name}}<p>
-            <img :src="tile.img_url"/>
-            <span slot="title">{{tile.name}}</span>
-            <!-- <span slot="subTitle">by <b>{{tile.author}}</b></span> -->
-            <mu-icon-button icon="star_border" slot="action"/>
-          </mu-grid-tile>
-        </mu-grid-list>
+      <div v-if="activeTab === 'tab1'">
+        <div class="gridlist-demo-container">
+          <mu-grid-list class="gridlist-demo" :cols=4>
+            <mu-sub-header>图片展示</mu-sub-header>
+            <mu-grid-tile v-for="tile, index in list" :key="'tile' + index">
+              <p>{{tile.name}}<p>
+              <img :src="tile.img_url"/>
+              <span slot="title">{{tile.name}}</span>
+              <!-- <span slot="subTitle">by <b>{{tile.author}}</b></span> -->
+              <mu-icon-button icon="star_border" slot="action"/>
+            </mu-grid-tile>
+          </mu-grid-list>
+        </div>
+      </div>
+
+      <div v-if="activeTab === 'tab2'">
+        <h2>Tab Two</h2>
+        <p>
+          This is Second Tab
+        </p>
+      </div>
+
+      <div v-if="activeTab === 'tab3'">
+        <h2>Tab Three</h2>
+        <p>
+          This is Third Tab
+        </p>
+      </div>
+
+      <div v-if="activeTab === 'tab4'">
+        <h2>Tab Three</h2>
+        <p>
+          This is Forth Tab
+        </p>
       </div>
       </template>
-
-    </div>
+      </div>
   </body>
 
   <style>
@@ -60,7 +98,8 @@
       var app = new Vue({
         el: '#app',
         data: {
-          list:[]
+          list:[],
+          activeTab: 'tab3'
         },
         created: function () {
           this.loadPage();
@@ -79,6 +118,9 @@
                     console.log(error);
                   });
                 this.list = data_list
+          },
+          handleTabChange (val) {
+            this.activeTab = val
           }
         }
       })
@@ -86,4 +128,34 @@
   <script>
 
   </script>
+<style scoped>
+.layout{
+  background-color: rgb(236, 236, 236);
+}
 
+.header{
+  background-color: #7e57c2;
+}
+
+.logo{
+  font-size: 24px;
+  color: white;
+  display: inline-block;
+  padding: 10px 20px;
+}
+
+.nav{
+  display: inline-block;
+  vertical-align: top;
+  width: calc(100% - 350px);
+  margin: 0 auto;
+
+}
+
+.tabs{
+  margin: 0 auto;
+  width: calc(100% -350px)/4;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+</style>
