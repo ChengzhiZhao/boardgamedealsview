@@ -11,6 +11,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
   </head>
 
   <body>
@@ -39,17 +40,20 @@
       
 
       <div v-if="activeTab === 'tab1'">
-        <div class="gridlist-demo-container">
-          <mu-grid-list class="gridlist-demo" :cols=5 :cellHeight=500 :padding=20>
-            <mu-sub-header>Popular Games</mu-sub-header>
-            <mu-grid-tile v-for="tile, index in list" :key="'tile' + index">
-              <img :src="tile.img_url"/>
-              <span slot="title">{{tile.name}}</span>
-              <span slot="subTitle"><b>{{tile.original_price}}</b></span>
-              <mu-icon-button icon="star_border" slot="action"/>
-            </mu-grid-tile>
-          </mu-grid-list>
-        </div>
+        <el-row>
+          <el-col :span="8" v-for="tile, index in list" :key="'tile' + index" :offset="index > 0 ? 2 : 0">
+            <el-card :body-style="{ padding: '0px' }">
+              <img :src="tile.img_url" class="image">
+              <div style="padding: 14px;">
+                <span>{{tile.name}}</span>
+                <div class="bottom clearfix">
+                  <time class="time">{{ currentDate }}</time>
+                  <el-button type="text" class="button">Operating button</el-button>
+                </div>
+              </div>
+            </el-card>
+          </el-col>
+        </el-row>
       </div>
 
       <div v-if="activeTab === 'tab2'">
@@ -80,6 +84,7 @@
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="https://unpkg.com/vue"></script>
   <script src="https://unpkg.com/muse-ui/dist/muse-ui.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/muse-ui/dist/muse-ui.css">
   <link rel="stylesheet" href="https://unpkg.com/muse-ui/dist/theme-light.css">
   <script>
@@ -117,6 +122,36 @@
 
   </script>
 <style scoped>
+  .time {
+    font-size: 13px;
+    color: #999;
+  }
+  
+  .bottom {
+    margin-top: 13px;
+    line-height: 12px;
+  }
+
+  .button {
+    padding: 0;
+    float: right;
+  }
+
+  .image {
+    width: 100%;
+    display: block;
+  }
+
+  .clearfix:before,
+  .clearfix:after {
+      display: table;
+      content: "";
+  }
+  
+  .clearfix:after {
+      clear: both
+  }
+
 .appbar-search-field{
   color: #FFF;
   margin-bottom: 0;
@@ -142,7 +177,6 @@
 
   .gridlist-demo{
     width: 1000px;
-    height: 450px;
     overflow-y: auto;
   }
 

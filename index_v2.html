@@ -11,6 +11,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet">
   </head>
 
   <body>
@@ -39,17 +40,41 @@
       
 
       <div v-if="activeTab === 'tab1'">
-        <div class="gridlist-demo-container">
-          <mu-grid-list class="gridlist-demo" :cols=5 :cellHeight=500 :padding=20>
-            <mu-sub-header>Popular Games</mu-sub-header>
-            <mu-grid-tile v-for="tile, index in list" :key="'tile' + index">
-              <img :src="tile.img_url"/>
-              <span slot="title">{{tile.name}}</span>
-              <span slot="subTitle"><b>{{tile.original_price}}</b></span>
-              <mu-icon-button icon="star_border" slot="action"/>
-            </mu-grid-tile>
-          </mu-grid-list>
-        </div>
+        <v-container grid-list-md text-xs-center>
+          <v-layout row>
+            <v-flex d-flex xs3 align-end flexbox v-for="tile, index in list" :key="index">
+                <v-card dark height="400px">
+                  <v-card-media :src="tile.img_url" height="200px"></v-card-media>
+                  <v-card-title primary-title>
+                    <div>
+                      <p>{{tile.name}}</p>
+                    </div>
+                  </v-card-title>
+                  <v-bottom-nav
+                      absolute
+                      shift
+                      :value="true"
+                      :active.sync="e2"
+                      :class="{
+                        'blue-grey': e2 === 1,
+                        'teal': e2 === 2,
+                        'brown': e2 === 3,
+                        'brown lighten-1': e2 === 4
+                      }"
+                    >
+                    <v-btn dark>
+                        <span>Video</span>
+                        <v-icon>ondemand_video</v-icon>
+                    </v-btn>
+                    <v-btn dark>
+                      <span>Music</span>
+                      <v-icon>music_note</v-icon>
+                    </v-btn>
+                </v-bottom-nav>
+                </v-card>
+            </v-flex>
+          </v-layout>
+        </v-container>
       </div>
 
       <div v-if="activeTab === 'tab2'">
@@ -80,8 +105,10 @@
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="https://unpkg.com/vue"></script>
   <script src="https://unpkg.com/muse-ui/dist/muse-ui.js"></script>
+  <script src="https://unpkg.com/vuetify/dist/vuetify.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/muse-ui/dist/muse-ui.css">
   <link rel="stylesheet" href="https://unpkg.com/muse-ui/dist/theme-light.css">
+  
   <script>
       var app = new Vue({
         el: '#app',
